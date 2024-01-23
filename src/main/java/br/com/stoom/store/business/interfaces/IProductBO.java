@@ -12,7 +12,7 @@ public interface IProductBO {
     Product findById(Long id) throws Exception;
     
     Product update(Long id, Product product) throws Exception;
-    
     Product changeStatus(Long id) throws Exception;
+    
     Product delete(Long id) throws Exception;
 }

@@ -2,33 +2,36 @@ package br.com.stoom.store.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
-@Table(name = "product")
-public class Product implements Serializable {
-	
-	private static final long serialVersionUID = -7044993010477700469L;
+@Table(name = "brand")
+public class Brand implements Serializable {
 
+	private static final long serialVersionUID = -3476967889285481742L;
+	
 	@Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_sequence")
     @SequenceGenerator(name = "product_sequence", sequenceName = "PRODUCT_SEQ")
     @Column(name = "id")
     private Long id;
-
+	
 	@Column(name = "name")
 	private String name;
 	
-	@Column(name = "sku")
-	private String sku;
-    
-    @Column(name = "price")
-    private String price;
-    
     @CreationTimestamp
     @Column(name = "create_date")
     private LocalDateTime created;
@@ -39,21 +42,19 @@ public class Product implements Serializable {
     
     @Column(name = "active")
     private boolean active = Boolean.TRUE;
-    
-    @ManyToOne
-    @JoinColumn(name = "brand_id")
-    private Brand brand;
-    
-    
-	public Product() {
-		super();
-	}	
 
-	public Product(String name, String price, Brand brand) {
+    @OneToMany
+    @JoinColumn(name = "brand_id")
+    private Set<Product> products;
+    
+    
+	public Brand() {
+		super();
+	}
+	
+	public Brand(String name) {
 		super();
 		this.name = name;
-		this.price = price;
-		this.brand = brand;
 	}
 
 
@@ -65,28 +66,12 @@ public class Product implements Serializable {
 		this.id = id;
 	}
 
-	public String getSku() {
-		return sku;
-	}
-
-	public void setSku(String sku) {
-		this.sku = sku;
-	}
-
 	public String getName() {
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public String getPrice() {
-		return price;
-	}
-
-	public void setPrice(String price) {
-		this.price = price;
 	}
 
 	public LocalDateTime getCreated() {
@@ -113,11 +98,11 @@ public class Product implements Serializable {
 		this.active = active;
 	}
 
-	public Brand getBrand() {
-		return brand;
+	public Set<Product> getProducts() {
+		return products;
 	}
 
-	public void setBrand(Brand brand) {
-		this.brand = brand;
+	public void setProducts(Set<Product> products) {
+		this.products = products;
 	}
 }

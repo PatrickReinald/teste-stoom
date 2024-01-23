@@ -4,10 +4,13 @@ import br.com.stoom.store.business.exception.ProductNotFoundException;
 import br.com.stoom.store.business.interfaces.IProductBO;
 import br.com.stoom.store.model.Product;
 import br.com.stoom.store.repository.ProductRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 
 @Service
 public class ProductBO implements IProductBO {
@@ -26,7 +29,7 @@ public class ProductBO implements IProductBO {
 
 	@Override
 	public List<Product> findAll(){
-		return this.repository.findAll();
+		return this.repository.findAll(isActive());
 	}
 
 	@Override
@@ -37,10 +40,13 @@ public class ProductBO implements IProductBO {
 
 	@Override
 	public Product update(Long id, Product product) throws ProductNotFoundException {
-		Product oldProduct = this.repository.findById(id).orElseThrow(() -> new ProductNotFoundException(errorMessage + id));
-		oldProduct = product;
+		Product productToUpdate = this.repository.findById(id).orElseThrow(() -> new ProductNotFoundException(errorMessage + id));
+		productToUpdate.setPrice(product.getPrice());
+		productToUpdate.setName(product.getName());
 		
-		return this.repository.save(oldProduct);
+		productToUpdate.setSku(skuGen(productToUpdate));
+		
+		return this.repository.save(productToUpdate);
 	}
 
 
@@ -64,10 +70,15 @@ public class ProductBO implements IProductBO {
 	public String skuGen(Product product) {
 		StringBuilder sku = new StringBuilder();
 		
-		sku.append(product.getName().substring(0, 3) + "/");
-		sku.append(product.getPrice().substring(0, 3) + "/");
-		sku.append(product.getPrice().substring(3));
+		sku.append(product.getName().substring(0, 3).toUpperCase() + "-");
+		sku.append(product.getPrice().substring(0, 3).toUpperCase() + "-");
+		sku.append(product.getPrice().substring(3).replace(".", ""));
 		
 		return sku.toString();
 	}
+	
+    public Specification<Product> isActive() {
+        return (root, query, criteriaBuilder) ->
+                criteriaBuilder.equal(root.get("active"), true);
+    }
 }
