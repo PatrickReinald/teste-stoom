@@ -1,0 +1,24 @@
+spring:
+  jpa:
+    hibernate.ddl-auto: create
+    show-sql: true
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/stoom_store
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jackson:
+    mapper:
+      accept-case-insensitive-enums: true
+
+springdoc:
+  api-docs:
+    path: /doc
+  swagger-ui:
+    path: /doc-ui.html
+
+server:
+  port: 8080
+  servlet:
+    context-path: /api
