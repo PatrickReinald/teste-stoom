@@ -1,7 +1,7 @@
 package br.com.stoom.store.business;
 
-import br.com.stoom.store.business.exception.ProductNotFoundException;
 import br.com.stoom.store.business.interfaces.IProductBO;
+import br.com.stoom.store.exception.ItemNotFoundException;
 import br.com.stoom.store.model.Product;
 import br.com.stoom.store.repository.ProductRepository;
 
@@ -33,14 +33,14 @@ public class ProductBO implements IProductBO {
 	}
 
 	@Override
-	public Product findById(Long id) throws ProductNotFoundException {
-		return this.repository.findById(id).orElseThrow(() -> new ProductNotFoundException(errorMessage + id));
+	public Product findById(Long id) throws ItemNotFoundException {
+		return this.repository.findById(id).orElseThrow(() -> new ItemNotFoundException(errorMessage + id));
 	}
 
 
 	@Override
-	public Product update(Long id, Product product) throws ProductNotFoundException {
-		Product productToUpdate = this.repository.findById(id).orElseThrow(() -> new ProductNotFoundException(errorMessage + id));
+	public Product update(Long id, Product product) throws ItemNotFoundException {
+		Product productToUpdate = this.repository.findById(id).orElseThrow(() -> new ItemNotFoundException(errorMessage + id));
 		productToUpdate.setPrice(product.getPrice());
 		productToUpdate.setName(product.getName());
 		
@@ -51,8 +51,8 @@ public class ProductBO implements IProductBO {
 
 
 	@Override
-	public Product changeStatus(Long id) throws ProductNotFoundException {
-		Product product = repository.findById(id).orElseThrow(() -> new ProductNotFoundException(errorMessage + id));
+	public Product changeStatus(Long id) throws ItemNotFoundException {
+		Product product = repository.findById(id).orElseThrow(() -> new ItemNotFoundException(errorMessage + id));
 		product.setActive(!product.isActive());
 		
 		return this.repository.save(product);
@@ -60,8 +60,8 @@ public class ProductBO implements IProductBO {
 
 
 	@Override
-	public Product delete(Long id) throws ProductNotFoundException {
-		Product product = repository.findById(id).orElseThrow(() -> new ProductNotFoundException(errorMessage + id));
+	public Product delete(Long id) throws ItemNotFoundException {
+		Product product = repository.findById(id).orElseThrow(() -> new ItemNotFoundException(errorMessage + id));
 		this.repository.delete(product);
 
 		return product;

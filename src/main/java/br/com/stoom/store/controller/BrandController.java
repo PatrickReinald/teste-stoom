@@ -12,54 +12,46 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.stoom.store.business.ProductBO;
+import br.com.stoom.store.business.BrandBO;
 import br.com.stoom.store.exception.ItemNotFoundException;
-import br.com.stoom.store.model.Product;
+import br.com.stoom.store.model.Brand;
 
 @RestController
-@RequestMapping("/product")
-public class ProductController {
+@RequestMapping("/brand")
+public class BrandController {
 
-    @Autowired
-    private ProductBO service;
-
-    
+	@Autowired
+	private BrandBO service;
+	
+	
     @PostMapping
-    public Product create(@RequestBody Product product) {
-    	return this.service.create(product);
+    public Brand create(@RequestBody Brand brand) {
+    	return this.service.create(brand);
     }
     
-    /*@GetMapping
-    public ResponseEntity<List<Product>> findAll() {
-        List<Product> p = this.service.findAll();
-        if(!p.isEmpty())
-            return new ResponseEntity<>(p, HttpStatus.OK);
-        else
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }*/
-    
     @GetMapping
-    public List<Product> findAll() {
+    public List<Brand> findAll() {
         return this.service.findAll();
     }
     
     @GetMapping("/{id}")
-    public Product findById(@PathVariable Long id) throws ItemNotFoundException {
+    public Brand findById(@PathVariable Long id) throws ItemNotFoundException {
     	return this.service.findById(id);
     }
     
     @PutMapping("/{id}")
-    public Product update(@PathVariable Long id, @RequestBody Product product) throws ItemNotFoundException {
-    	return this.service.update(id, product);
+    public Brand update(@PathVariable Long id, @RequestBody Brand brand) throws ItemNotFoundException {
+    	return this.service.update(id, brand);
     }
     
     @PutMapping("/toggle/{id}")
-    public Product changeStatus(@PathVariable Long id) throws ItemNotFoundException {
+    public Brand changeStatus(@PathVariable Long id) throws ItemNotFoundException {
     	return this.service.changeStatus(id);
     }
     
     @DeleteMapping("/{id}")
-    public Product delete(@PathVariable Long id) throws ItemNotFoundException {
+    public Brand delete(@PathVariable Long id) throws ItemNotFoundException {
     	return this.service.delete(id);
     }
+	
 }

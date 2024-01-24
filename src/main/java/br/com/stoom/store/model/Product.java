@@ -8,6 +8,8 @@ import javax.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "product")
 public class Product implements Serializable {
@@ -23,7 +25,7 @@ public class Product implements Serializable {
 	@Column(name = "name")
 	private String name;
 	
-	@Column(name = "sku")
+	@Column(name = "sku", unique = true)
 	private String sku;
     
     @Column(name = "price")
@@ -40,6 +42,7 @@ public class Product implements Serializable {
     @Column(name = "active")
     private boolean active = Boolean.TRUE;
     
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "brand_id")
     private Brand brand;
@@ -49,13 +52,30 @@ public class Product implements Serializable {
 		super();
 	}	
 
+	public Product(Long id) {
+		super();
+		this.id = id;
+	}
+
 	public Product(String name, String price, Brand brand) {
 		super();
 		this.name = name;
 		this.price = price;
 		this.brand = brand;
 	}
-
+	
+	public Product(Long id, String name, String sku, String price, LocalDateTime created, LocalDateTime modified,
+			boolean active, Brand brand) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.sku = sku;
+		this.price = price;
+		this.created = created;
+		this.modified = modified;
+		this.active = active;
+		this.brand = brand;
+	}
 
 	public Long getId() {
 		return id;

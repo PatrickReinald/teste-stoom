@@ -4,12 +4,12 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -29,7 +29,7 @@ public class Brand implements Serializable {
     @Column(name = "id")
     private Long id;
 	
-	@Column(name = "name")
+	@Column(name = "name", unique = true)
 	private String name;
 	
     @CreationTimestamp
@@ -43,8 +43,7 @@ public class Brand implements Serializable {
     @Column(name = "active")
     private boolean active = Boolean.TRUE;
 
-    @OneToMany
-    @JoinColumn(name = "brand_id")
+    @OneToMany(mappedBy = "brand")
     private Set<Product> products;
     
     
@@ -52,11 +51,26 @@ public class Brand implements Serializable {
 		super();
 	}
 	
+	public Brand(Long id) {
+		super();
+		this.id = id;
+	}
+
 	public Brand(String name) {
 		super();
 		this.name = name;
 	}
-
+	
+	public Brand(Long id, String name, LocalDateTime created, LocalDateTime modified, boolean active,
+			Set<Product> products) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.created = created;
+		this.modified = modified;
+		this.active = active;
+		this.products = products;
+	}
 
 	public Long getId() {
 		return id;
