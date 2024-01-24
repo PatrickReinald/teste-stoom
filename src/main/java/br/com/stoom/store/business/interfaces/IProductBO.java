@@ -1,18 +1,20 @@
 package br.com.stoom.store.business.interfaces;
 
-import br.com.stoom.store.model.Product;
-
 import java.util.List;
+
+import br.com.stoom.store.exception.ItemNotFoundException;
+import br.com.stoom.store.model.Product;
 
 public interface IProductBO {
 
 	Product create(Product product);
 	
     List<Product> findAll();
-    Product findById(Long id) throws Exception;
+    Product findById(Long id) throws ItemNotFoundException;
     
-    Product update(Long id, Product product) throws Exception;
-    Product changeStatus(Long id) throws Exception;
+    Product update(Long id, Product product) throws ItemNotFoundException;
+    Product changeStatus(Long id) throws ItemNotFoundException;
     
-    Product delete(Long id) throws Exception;
+	Product delete(Long id) throws ItemNotFoundException;
+
 }

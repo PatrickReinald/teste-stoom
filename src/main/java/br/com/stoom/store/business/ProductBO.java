@@ -61,9 +61,9 @@ public class ProductBO implements IProductBO {
 
 	@Override
 	public Product delete(Long id) throws ItemNotFoundException {
-		Product product = repository.findById(id).orElseThrow(() -> new ItemNotFoundException(errorMessage + id));
+		Product product = this.repository.findById(id).orElseThrow(() -> new ItemNotFoundException(errorMessage + id));
 		this.repository.delete(product);
-
+		
 		return product;
 	}
 	

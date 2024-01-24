@@ -53,5 +53,4 @@ public class BrandController {
     public Brand delete(@PathVariable Long id) throws ItemNotFoundException {
     	return this.service.delete(id);
     }
-	
 }

@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.stoom.store.business.interfaces.IBrandBO;
 import br.com.stoom.store.exception.ItemNotFoundException;
@@ -45,7 +47,7 @@ public class BrandBO implements IBrandBO {
 
 	@Override
 	public Brand changeStatus(Long id) throws ItemNotFoundException {
-		Brand brand = repository.findById(id).orElseThrow(() -> new ItemNotFoundException(errorMessage + id));
+		Brand brand = this.repository.findById(id).orElseThrow(() -> new ItemNotFoundException(errorMessage + id));
 		brand.setActive(!brand.isActive());
 		
 		return this.repository.save(brand);
@@ -53,7 +55,7 @@ public class BrandBO implements IBrandBO {
 
 	@Override
 	public Brand delete(Long id) throws ItemNotFoundException {
-		Brand brand = repository.findById(id).orElseThrow(() -> new ItemNotFoundException(errorMessage + id));
+		Brand brand = this.repository.findById(id).orElseThrow(() -> new ItemNotFoundException(errorMessage + id));
 		this.repository.delete(brand);
 		
 		return brand;

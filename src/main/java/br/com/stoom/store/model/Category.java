@@ -18,11 +18,11 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
-@Table(name = "brand")
-public class Brand implements Serializable {
+@Table(name = "category")
+public class Category implements Serializable {
 
-	private static final long serialVersionUID = -3476967889285481742L;
-	
+	private static final long serialVersionUID = 5732687855916107339L;
+
 	@Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_sequence")
     @SequenceGenerator(name = "product_sequence", sequenceName = "PRODUCT_SEQ")
@@ -43,24 +43,24 @@ public class Brand implements Serializable {
     @Column(name = "active")
     private boolean active = Boolean.TRUE;
 
-    @OneToMany(mappedBy = "brand", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "category", fetch = FetchType.EAGER)
     private Set<Product> products;
+
     
-    
-	public Brand() {
+	public Category() {
 		super();
 	}
-	
-	public Brand(Long id) {
+
+	public Category(Long id) {
 		super();
 		this.id = id;
 	}
 
-	public Brand(String name) {
+	public Category(String name) {
 		super();
 		this.name = name;
 	}
-	
+
 	
 	public Long getId() {
 		return id;

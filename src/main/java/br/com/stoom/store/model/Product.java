@@ -3,12 +3,21 @@ package br.com.stoom.store.model;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "product")
@@ -42,10 +51,13 @@ public class Product implements Serializable {
     @Column(name = "active")
     private boolean active = Boolean.TRUE;
     
-    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "brand_id")
     private Brand brand;
+    
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
     
     
 	public Product() {
@@ -57,25 +69,14 @@ public class Product implements Serializable {
 		this.id = id;
 	}
 
-	public Product(String name, String price, Brand brand) {
+	public Product(String name, String price, Brand brand, Category category) {
 		super();
 		this.name = name;
 		this.price = price;
 		this.brand = brand;
+		this.category = category;
 	}
 	
-	public Product(Long id, String name, String sku, String price, LocalDateTime created, LocalDateTime modified,
-			boolean active, Brand brand) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.sku = sku;
-		this.price = price;
-		this.created = created;
-		this.modified = modified;
-		this.active = active;
-		this.brand = brand;
-	}
 
 	public Long getId() {
 		return id;
@@ -133,11 +134,23 @@ public class Product implements Serializable {
 		this.active = active;
 	}
 
+	@JsonIgnore
 	public Brand getBrand() {
 		return brand;
 	}
 
+	@JsonProperty
 	public void setBrand(Brand brand) {
 		this.brand = brand;
+	}
+
+	@JsonIgnore
+	public Category getCategory() {
+		return category;
+	}
+
+	@JsonProperty
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 }
