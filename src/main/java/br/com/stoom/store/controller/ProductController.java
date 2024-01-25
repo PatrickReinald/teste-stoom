@@ -1,6 +1,7 @@
 package br.com.stoom.store.controller;
 
-import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.stoom.store.business.ProductBO;
+import br.com.stoom.store.dto.ProductDto;
 import br.com.stoom.store.exception.ItemNotFoundException;
 import br.com.stoom.store.model.Product;
 
@@ -25,32 +27,32 @@ public class ProductController {
 
     
     @PostMapping
-    public Product create(@RequestBody Product product) {
-    	return this.service.create(product);
+    public ProductDto create(@RequestBody Product product) {
+    	return ProductDto.transmute(this.service.create(product));
     }
     
     @GetMapping
-    public List<Product> findAll() {
-        return this.service.findAll();
+    public Set<ProductDto> findAll() {
+        return this.service.findAll().stream().map(ProductDto::transmute).collect(Collectors.toSet());
     }
     
     @GetMapping("/{id}")
-    public Product findById(@PathVariable Long id) throws ItemNotFoundException {
-    	return this.service.findById(id);
+    public ProductDto findById(@PathVariable Long id) throws ItemNotFoundException {
+    	return ProductDto.transmute(this.service.findById(id));
     }
     
     @PutMapping("/{id}")
-    public Product update(@PathVariable Long id, @RequestBody Product product) throws ItemNotFoundException {
-    	return this.service.update(id, product);
+    public ProductDto update(@PathVariable Long id, @RequestBody Product product) throws ItemNotFoundException {
+    	return ProductDto.transmute(this.service.update(id, product));
     }
     
     @PutMapping("/toggle/{id}")
-    public Product changeStatus(@PathVariable Long id) throws ItemNotFoundException {
-    	return this.service.changeStatus(id);
+    public ProductDto changeStatus(@PathVariable Long id) throws ItemNotFoundException {
+    	return ProductDto.transmute(this.service.changeStatus(id));
     }
     
     @DeleteMapping("/{id}")
-    public Product delete(@PathVariable Long id) throws ItemNotFoundException {
-    	return this.service.delete(id);
+    public ProductDto delete(@PathVariable Long id) throws ItemNotFoundException {
+    	return ProductDto.transmute(this.service.delete(id));
     }
 }
