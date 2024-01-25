@@ -36,6 +36,9 @@ public class ProductBO implements IProductBO {
 		return this.repository.findById(id).orElseThrow(() -> new ItemNotFoundException(errorMessage + id));
 	}
 
+	public Product findBySku(String sku) throws ItemNotFoundException {
+		return this.repository.findBySku(sku).orElseThrow(() -> new ItemNotFoundException(errorMessage + sku));
+	}
 
 	@Override
 	public Product update(Long id, Product product) throws ItemNotFoundException {

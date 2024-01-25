@@ -41,6 +41,11 @@ public class ProductController {
     	return ProductDto.transmute(this.service.findById(id));
     }
     
+    @GetMapping("/sku/{sku}")
+    public ProductDto findBySku(@PathVariable String sku) throws ItemNotFoundException {
+    	return ProductDto.transmute(this.service.findBySku(sku));
+    }
+    
     @PutMapping("/{id}")
     public ProductDto update(@PathVariable Long id, @RequestBody Product product) throws ItemNotFoundException {
     	return ProductDto.transmute(this.service.update(id, product));
