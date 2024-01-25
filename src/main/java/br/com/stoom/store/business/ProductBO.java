@@ -1,15 +1,14 @@
 package br.com.stoom.store.business;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import br.com.stoom.store.business.interfaces.IProductBO;
 import br.com.stoom.store.exception.ItemNotFoundException;
 import br.com.stoom.store.model.Product;
 import br.com.stoom.store.repository.ProductRepository;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.domain.Specification;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 
 @Service
@@ -29,7 +28,7 @@ public class ProductBO implements IProductBO {
 
 	@Override
 	public List<Product> findAll(){
-		return this.repository.findAll(isActive());
+		return this.repository.findAll();
 	}
 
 	@Override
@@ -76,9 +75,4 @@ public class ProductBO implements IProductBO {
 		
 		return sku.toString();
 	}
-	
-    public Specification<Product> isActive() {
-        return (root, query, criteriaBuilder) ->
-                criteriaBuilder.equal(root.get("active"), true);
-    }
 }

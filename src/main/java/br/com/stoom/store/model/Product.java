@@ -14,13 +14,17 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.Where;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "product")
+@Where(clause = "active=true")
 public class Product implements Serializable {
 	
 	private static final long serialVersionUID = -7044993010477700469L;
@@ -51,10 +55,12 @@ public class Product implements Serializable {
     @Column(name = "active")
     private boolean active = Boolean.TRUE;
     
+    @NotFound(action = NotFoundAction.IGNORE)
     @ManyToOne
     @JoinColumn(name = "brand_id")
     private Brand brand;
     
+    @NotFound(action = NotFoundAction.IGNORE)
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;

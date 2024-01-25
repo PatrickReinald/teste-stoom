@@ -3,10 +3,7 @@ package br.com.stoom.store.business;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import br.com.stoom.store.business.interfaces.IBrandBO;
 import br.com.stoom.store.exception.ItemNotFoundException;
@@ -29,7 +26,7 @@ public class BrandBO implements IBrandBO {
 
 	@Override
 	public List<Brand> findAll() {
-		return this.repository.findAll(isActive());
+		return this.repository.findAll();
 	}
 
 	@Override
@@ -60,9 +57,4 @@ public class BrandBO implements IBrandBO {
 		
 		return brand;
 	}
-
-	public Specification<Brand> isActive() {
-        return (root, query, criteriaBuilder) ->
-                criteriaBuilder.equal(root.get("active"), true);
-    }
 }

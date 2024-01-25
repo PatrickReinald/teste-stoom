@@ -16,9 +16,11 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.Where;
 
 @Entity
 @Table(name = "category")
+@Where(clause = "active=true")
 public class Category implements Serializable {
 
 	private static final long serialVersionUID = 5732687855916107339L;

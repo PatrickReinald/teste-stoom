@@ -3,7 +3,6 @@ package br.com.stoom.store.business;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import br.com.stoom.store.business.interfaces.ICategoryBO;
@@ -27,7 +26,7 @@ private final String errorMessage = "Category not found: ";
 
 	@Override
 	public List<Category> findAll() {
-		return this.repository.findAll(isActive());
+		return this.repository.findAll();
 	}
 
 	@Override
@@ -58,9 +57,4 @@ private final String errorMessage = "Category not found: ";
 		
 		return category;
 	}
-
-	public Specification<Category> isActive() {
-        return (root, query, criteriaBuilder) ->
-                criteriaBuilder.equal(root.get("active"), true);
-    }
 }
