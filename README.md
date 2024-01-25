@@ -1,22 +1,26 @@
-**Seja bem-vindo candidato!**
+<h1>Stoom Store API</h1>
 
-Como um desenvolvedor Back-End na Stoom uma das maiores responsabilidades que você vai ter é desenvolver funcionalidades e corrigir bugs em sistemas de e-commerce de larga escala que utilizam Spring Boot. Com base nisso, precisamos de sua ajuda para construir a nossa loja Stoom, que deve conter as seguintes funcionalidades:
+API desenvolvida para testar as habilidades de desenvolvimento backend do candidato à Stoom. Seguem as instruções para o funcionamento do projeto com o intuito de demonstrar suas funcionalidades conforme requeridas.
 
-1. Deve ser desenvolvida uma API de CRUD de produtos
-2. Os produtos devem ser enriquecidos com as informações que você julgar relevante para o funcionamento em uma loja, algumas são obrigatórias:
-    - Categorias
-    - Marca
-    - Preços
-3. Deve existir um endpoint na API para a busca de produtos que será utilizada na loja
-4. Deve existir um endpoint que lista os produtos de uma determinada Marca
-5. Deve existir um endpoint que lista os produtos de uma determinada Categoria
-6. Produtos podem ser inativados para não aparecerem na busca ou nas listagens sem a necessidade de serem deletados para poderem ser reativados posteriormente
-7. Marcas e categorias também podem ser inativados para não aparecerem na loja
+<h2>Tecnologias</h2>
 
-**Informações relevantes**:
-- Atente-se à todos os pré-requisitos estabelecidos, porém não limite-se a eles, ideias novas ou melhorias são sempre bem-vindas :smiley:
-- Você tem total liberdade para fazer qualquer tipo de alteração em qualquer ponto do código (contanto que não alterem a maneira de execução da aplicação)
-- Se possível, adicione uma collection do Postman no repositório para conseguirmos testar o código da mesma forma que você
-- Boas práticas, legibilidade, testes e performance são alguns dos pontos que serão considerados durante a avaliação
+Foram utilizadas as seguintes tecnologias:
 
-**Boa sorte!**
+- Java 17.0.10
+- Spring Boot 2.3.0
+- Apache Maven 3.9.6
+- Postgresql 16.1-1
+
+<h2>Instruções</h2>
+
+É necessário para o funcionamento adequeado do projeto que haja uma base de dados nomeada como `stoom_store`.
+Com as devidas tecnologias disponíveis, execute o comando `mvn spring-boot:run` no diretório raiz do mesmo.
+
+<h2>Informações</h2>
+
+- Na raiz do projeto foi adicionado o arquivo `api_collection.json`. Esta coleção facilitará as chamadas à API;
+- A API está configurada para utilizar a `porta 8080` para sua execução;
+- Para a criação de um produto, será necessário a criação de uma `marca` e uma `categoria`;
+- Isso pode ser feito junto, utilizando o endpoint `POST` `/product` ou em seus respectivos endpoints `POST`;
+- Ao retornar uma `marca` ou `categoria` serão retornados também seus produtos;
+- O arquivo `application-dev.yml` foi inserido com objetivo de padronizar e facilitar a transição de futuros ambientes através de perfis.
